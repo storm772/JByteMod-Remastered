@@ -11,7 +11,7 @@ public class Discord {
 
     public static void init() {
         discordRPC = DiscordRPC.INSTANCE;
-        String applicationId = "610647709694558231";
+        String applicationId = "765649706877190195";
         DiscordEventHandlers handlers = new DiscordEventHandlers();
         handlers.ready = (user) -> JByteMod.LOGGER.log("Discord is now ready.");
 

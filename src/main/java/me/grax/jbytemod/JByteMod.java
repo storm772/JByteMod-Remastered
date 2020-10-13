@@ -41,16 +41,19 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Properties;
 
 public class JByteMod extends JFrame {
-
-    private static final String jbytemod = "JByteMod Reborn";
+	private static final String version = "2.0";
+    private static final String jbytemod = "JByteMod Remastered v" + version;
+    
     public static File workingDir = new File(".");
     public static String configPath = "jbytemod.cfg";
     public static Logging LOGGER;
@@ -484,4 +487,5 @@ public class JByteMod extends JFrame {
             }
         }).start();
     }
+
 }
