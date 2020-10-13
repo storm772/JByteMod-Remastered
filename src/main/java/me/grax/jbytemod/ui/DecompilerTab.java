@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import static me.grax.jbytemod.decompiler.Decompilers.KOFFEE;
 
 public class DecompilerTab extends JPanel {
     private static File tempDir = new File(System.getProperty("java.io.tmpdir"));
@@ -158,13 +157,9 @@ public class DecompilerTab extends JPanel {
         }
         Decompiler d = null;
 
-        if (decompiler == KOFFEE) {
-            //dp.setEditable(true);
-            //compile.setVisible(true);
-        } else {
             compile.setVisible(false);
             dp.setEditable(false);
-        }
+        
 
         switch (decompiler) {
             case PROCYON:
@@ -179,9 +174,7 @@ public class DecompilerTab extends JPanel {
             case KRAKATAU:
                 d = new KrakatauDecompiler(jbm, dp);
                 break;
-            case KOFFEE:
-                d = new KoffeeDecompiler(jbm, dp);
-                break;
+
         }
         d.setNode(cn, mn);
         if (deleteCache) {
