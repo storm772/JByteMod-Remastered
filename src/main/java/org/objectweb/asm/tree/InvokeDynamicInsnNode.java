@@ -1,95 +1,77 @@
-/***
- * ASM: a very small and fast Java bytecode manipulation framework
- * Copyright (c) 2000-2011 INRIA, France Telecom
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the copyright holders nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
- * THE POSSIBILITY OF SUCH DAMAGE.
- */
+// ASM: a very small and fast Java bytecode manipulation framework
+// Copyright (c) 2000-2011 INRIA, France Telecom
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions
+// are met:
+// 1. Redistributions of source code must retain the above copyright
+//    notice, this list of conditions and the following disclaimer.
+// 2. Redistributions in binary form must reproduce the above copyright
+//    notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 3. Neither the name of the copyright holders nor the names of its
+//    contributors may be used to endorse or promote products derived from
+//    this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+// THE POSSIBILITY OF SUCH DAMAGE.
 package org.objectweb.asm.tree;
 
 import java.util.Map;
-
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
 
 /**
  * A node that represents an invokedynamic instruction.
- * 
+ *
  * @author Remi Forax
  */
 public class InvokeDynamicInsnNode extends AbstractInsnNode {
 
-  /**
-   * Invokedynamic name.
-   */
+  /** The method's name. */
   public String name;
 
-  /**
-   * Invokedynamic descriptor.
-   */
+  /** The method's descriptor (see {@link org.objectweb.asm.Type}). */
   public String desc;
 
-  /**
-   * Bootstrap method
-   */
+  /** The bootstrap method. */
   public Handle bsm;
 
-  /**
-   * Bootstrap constant arguments
-   */
+  /** The bootstrap method constant arguments. */
   public Object[] bsmArgs;
-
-  @SuppressWarnings("deprecation")
-  public InvokeDynamicInsnNode() {
-    super(Opcodes.INVOKEDYNAMIC);
-    name = "";
-    desc = "";
-    bsmArgs = new Object[] { Type.getType("()V"), new Handle(Opcodes.H_INVOKESTATIC, "", "", ""), Type.getType("(V") };
-    bsm = new Handle(Opcodes.H_INVOKESTATIC, "", "", "");
-  }
 
   /**
    * Constructs a new {@link InvokeDynamicInsnNode}.
-   * 
-   * @param name
-   *          invokedynamic name.
-   * @param desc
-   *          invokedynamic descriptor (see {@link org.objectweb.asm.Type}).
-   * @param bsm
-   *          the bootstrap method.
-   * @param bsmArgs
-   *          the boostrap constant arguments.
+   *
+   * @param name the method's name.
+   * @param descriptor the method's descriptor (see {@link org.objectweb.asm.Type}).
+   * @param bootstrapMethodHandle the bootstrap method.
+   * @param bootstrapMethodArguments the bootstrap method constant arguments. Each argument must be
+   *     an {@link Integer}, {@link Float}, {@link Long}, {@link Double}, {@link String}, {@link
+   *     org.objectweb.asm.Type} or {@link Handle} value. This method is allowed to modify the
+   *     content of the array so a caller should expect that this array may change.
    */
-  public InvokeDynamicInsnNode(final String name, final String desc, final Handle bsm, final Object... bsmArgs) {
+  public InvokeDynamicInsnNode(
+      final String name,
+      final String descriptor,
+      final Handle bootstrapMethodHandle,
+      final Object... bootstrapMethodArguments) { // NOPMD(ArrayIsStoredDirectly): public field.
     super(Opcodes.INVOKEDYNAMIC);
     this.name = name;
-    this.desc = desc;
-    this.bsm = bsm;
-    this.bsmArgs = bsmArgs;
+    this.desc = descriptor;
+    this.bsm = bootstrapMethodHandle;
+    this.bsmArgs = bootstrapMethodArguments;
   }
 
   @Override
@@ -98,13 +80,13 @@ public class InvokeDynamicInsnNode extends AbstractInsnNode {
   }
 
   @Override
-  public void accept(final MethodVisitor mv) {
-    mv.visitInvokeDynamicInsn(name, desc, bsm, bsmArgs);
-    acceptAnnotations(mv);
+  public void accept(final MethodVisitor methodVisitor) {
+    methodVisitor.visitInvokeDynamicInsn(name, desc, bsm, bsmArgs);
+    acceptAnnotations(methodVisitor);
   }
 
   @Override
-  public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+  public AbstractInsnNode clone(final Map<LabelNode, LabelNode> clonedLabels) {
     return new InvokeDynamicInsnNode(name, desc, bsm, bsmArgs).cloneAnnotations(this);
   }
 }

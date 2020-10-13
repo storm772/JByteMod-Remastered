@@ -29,45 +29,49 @@ package org.objectweb.asm.util;
 
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Attribute;
-import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.RecordComponentVisitor;
 import org.objectweb.asm.TypePath;
 import org.objectweb.asm.TypeReference;
 
 /**
- * A {@link FieldVisitor} that checks that its methods are properly used.
+ * A {@link RecordComponentVisitor} that checks that its methods are properly used.
  *
  * @author Eric Bruneton
+ * @author Remi Forax
  */
-public class CheckFieldAdapter extends FieldVisitor {
+public class CheckRecordComponentAdapter extends RecordComponentVisitor {
 
-  /** Whether the {@link #visitEnd} method has been called. */
+  /** Whether the {@link #visitEnd()} method has been called. */
   private boolean visitEndCalled;
 
   /**
-   * Constructs a new {@link CheckFieldAdapter}. <i>Subclasses must not use this constructor</i>.
-   * Instead, they must use the {@link #CheckFieldAdapter(int, FieldVisitor)} version.
+   * Constructs a new {@link CheckRecordComponentAdapter}. <i>Subclasses must not use this
+   * constructor</i>. Instead, they must use the {@link #CheckRecordComponentAdapter(int,
+   * RecordComponentVisitor)} version.
    *
-   * @param fieldVisitor the field visitor to which this adapter must delegate calls.
+   * @param recordComponentVisitor the record component visitor to which this adapter must delegate
+   *     calls.
    * @throws IllegalStateException If a subclass calls this constructor.
    */
-  public CheckFieldAdapter(final FieldVisitor fieldVisitor) {
-    this(/* latest api = */ Opcodes.ASM9, fieldVisitor);
-    if (getClass() != CheckFieldAdapter.class) {
+  public CheckRecordComponentAdapter(final RecordComponentVisitor recordComponentVisitor) {
+    this(/* latest api =*/ Opcodes.ASM9, recordComponentVisitor);
+    if (getClass() != CheckRecordComponentAdapter.class) {
       throw new IllegalStateException();
     }
   }
 
   /**
-   * Constructs a new {@link CheckFieldAdapter}.
+   * Constructs a new {@link CheckRecordComponentAdapter}.
    *
-   * @param api the ASM API version implemented by this visitor. Must be one of {@link
-   *     Opcodes#ASM4}, {@link Opcodes#ASM5}, {@link Opcodes#ASM6}, {@link Opcodes#ASM7}, {@link
-   *     Opcodes#ASM8} or {@link Opcodes#ASM9}.
-   * @param fieldVisitor the field visitor to which this adapter must delegate calls.
+   * @param api the ASM API version implemented by this visitor. Must be one of {@link Opcodes#ASM8}
+   *     or {@link Opcodes#ASM9}.
+   * @param recordComponentVisitor the record component visitor to which this adapter must delegate
+   *     calls.
    */
-  protected CheckFieldAdapter(final int api, final FieldVisitor fieldVisitor) {
-    super(api, fieldVisitor);
+  protected CheckRecordComponentAdapter(
+      final int api, final RecordComponentVisitor recordComponentVisitor) {
+    super(api, recordComponentVisitor);
   }
 
   @Override

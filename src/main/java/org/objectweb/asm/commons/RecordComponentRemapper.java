@@ -30,72 +30,59 @@ package org.objectweb.asm.commons;
 
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.RecordComponentVisitor;
+import org.objectweb.asm.TypePath;
 
 /**
- * An {@link AnnotationVisitor} that remaps types with a {@link Remapper}.
+ * A {@link RecordComponentVisitor} that remaps types with a {@link Remapper}.
  *
- * @author Eugene Kuleshov
+ * @author Remi Forax
  */
-public class AnnotationRemapper extends AnnotationVisitor {
+public class RecordComponentRemapper extends RecordComponentVisitor {
 
-  /** The remapper used to remap the types in the visited annotation. */
+  /** The remapper used to remap the types in the visited field. */
   protected final Remapper remapper;
 
   /**
-   * Constructs a new {@link AnnotationRemapper}. <i>Subclasses must not use this constructor</i>.
-   * Instead, they must use the {@link #AnnotationRemapper(int,AnnotationVisitor,Remapper)} version.
+   * Constructs a new {@link RecordComponentRemapper}. <i>Subclasses must not use this
+   * constructor</i>. Instead, they must use the {@link
+   * #RecordComponentRemapper(int,RecordComponentVisitor,Remapper)} version.
    *
-   * @param annotationVisitor the annotation visitor this remapper must deleted to.
-   * @param remapper the remapper to use to remap the types in the visited annotation.
+   * @param recordComponentVisitor the record component visitor this remapper must delegate to.
+   * @param remapper the remapper to use to remap the types in the visited record component.
    */
-  public AnnotationRemapper(final AnnotationVisitor annotationVisitor, final Remapper remapper) {
-    this(/* latest api = */ Opcodes.ASM9, annotationVisitor, remapper);
+  public RecordComponentRemapper(
+      final RecordComponentVisitor recordComponentVisitor, final Remapper remapper) {
+    this(/* latest api = */ Opcodes.ASM9, recordComponentVisitor, remapper);
   }
 
   /**
-   * Constructs a new {@link AnnotationRemapper}.
+   * Constructs a new {@link RecordComponentRemapper}.
    *
    * @param api the ASM API version supported by this remapper. Must be one of {@link
-   *     org.objectweb.asm.Opcodes#ASM4}, {@link org.objectweb.asm.Opcodes#ASM5}, {@link
-   *     org.objectweb.asm.Opcodes#ASM6}, {@link org.objectweb.asm.Opcodes#ASM7}, {@link
    *     org.objectweb.asm.Opcodes#ASM8} or {@link org.objectweb.asm.Opcodes#ASM9}.
-   * @param annotationVisitor the annotation visitor this remapper must deleted to.
-   * @param remapper the remapper to use to remap the types in the visited annotation.
+   * @param recordComponentVisitor the record component visitor this remapper must delegate to.
+   * @param remapper the remapper to use to remap the types in the visited record component.
    */
-  protected AnnotationRemapper(
-      final int api, final AnnotationVisitor annotationVisitor, final Remapper remapper) {
-    super(api, annotationVisitor);
+  protected RecordComponentRemapper(
+      final int api, final RecordComponentVisitor recordComponentVisitor, final Remapper remapper) {
+    super(api, recordComponentVisitor);
     this.remapper = remapper;
   }
 
   @Override
-  public void visit(final String name, final Object value) {
-    super.visit(name, remapper.mapValue(value));
+  public AnnotationVisitor visitAnnotation(final String descriptor, final boolean visible) {
+    AnnotationVisitor annotationVisitor =
+        super.visitAnnotation(remapper.mapDesc(descriptor), visible);
+    return annotationVisitor == null ? null : createAnnotationRemapper(annotationVisitor);
   }
 
   @Override
-  public void visitEnum(final String name, final String descriptor, final String value) {
-    super.visitEnum(name, remapper.mapDesc(descriptor), value);
-  }
-
-  @Override
-  public AnnotationVisitor visitAnnotation(final String name, final String descriptor) {
-    AnnotationVisitor annotationVisitor = super.visitAnnotation(name, remapper.mapDesc(descriptor));
-    if (annotationVisitor == null) {
-      return null;
-    } else {
-      return annotationVisitor == av ? this : createAnnotationRemapper(annotationVisitor);
-    }
-  }
-
-  @Override
-  public AnnotationVisitor visitArray(final String name) {
-    AnnotationVisitor annotationVisitor = super.visitArray(name);
-    if (annotationVisitor == null) {
-      return null;
-    } else {
-      return annotationVisitor == av ? this : createAnnotationRemapper(annotationVisitor);
-    }
+  public AnnotationVisitor visitTypeAnnotation(
+      final int typeRef, final TypePath typePath, final String descriptor, final boolean visible) {
+    AnnotationVisitor annotationVisitor =
+        super.visitTypeAnnotation(typeRef, typePath, remapper.mapDesc(descriptor), visible);
+    return annotationVisitor == null ? null : createAnnotationRemapper(annotationVisitor);
   }
 
   /**

@@ -78,6 +78,7 @@ public class Textifier extends Printer {
 
   private static final String CLASS_SUFFIX = ".class";
   private static final String DEPRECATED = "// DEPRECATED\n";
+  private static final String RECORD = "// RECORD\n";
   private static final String INVISIBLE = " // invisible\n";
 
   private static final List<String> FRAME_TYPES =
@@ -111,7 +112,7 @@ public class Textifier extends Printer {
    * @throws IllegalStateException If a subclass calls this constructor.
    */
   public Textifier() {
-    this(Opcodes.ASM7);
+    this(/* latest api = */ Opcodes.ASM9);
     if (getClass() != Textifier.class) {
       throw new IllegalStateException();
     }
@@ -121,7 +122,8 @@ public class Textifier extends Printer {
    * Constructs a new {@link Textifier}.
    *
    * @param api the ASM API version implemented by this visitor. Must be one of {@link
-   *     Opcodes#ASM4}, {@link Opcodes#ASM5}, {@link Opcodes#ASM6} or {@link Opcodes#ASM7}.
+   *     Opcodes#ASM4}, {@link Opcodes#ASM5}, {@link Opcodes#ASM6}, {@link Opcodes#ASM7}, {@link
+   *     Opcodes#ASM8} or {@link Opcodes#ASM9}.
    */
   protected Textifier(final int api) {
     super(api);
@@ -184,6 +186,9 @@ public class Textifier extends Printer {
         .append(")\n");
     if ((access & Opcodes.ACC_DEPRECATED) != 0) {
       stringBuilder.append(DEPRECATED);
+    }
+    if ((access & Opcodes.ACC_RECORD) != 0) {
+      stringBuilder.append(RECORD);
     }
     appendRawAccess(access);
 
@@ -302,6 +307,15 @@ public class Textifier extends Printer {
   }
 
   @Override
+  public void visitPermittedSubclass(final String permittedSubclass) {
+    stringBuilder.setLength(0);
+    stringBuilder.append(tab).append("PERMITTEDSUBCLASS ");
+    appendDescriptor(INTERNAL_NAME, permittedSubclass);
+    stringBuilder.append('\n');
+    text.add(stringBuilder.toString());
+  }
+
+  @Override
   public void visitInnerClass(
       final String name, final String outerName, final String innerName, final int access) {
     stringBuilder.setLength(0);
@@ -317,6 +331,28 @@ public class Textifier extends Printer {
     appendDescriptor(INTERNAL_NAME, innerName);
     stringBuilder.append('\n');
     text.add(stringBuilder.toString());
+  }
+
+  @Override
+  public Printer visitRecordComponent(
+      final String name, final String descriptor, final String signature) {
+    stringBuilder.setLength(0);
+    stringBuilder.append(tab).append("RECORDCOMPONENT ");
+    if (signature != null) {
+      stringBuilder.append(tab);
+      appendDescriptor(FIELD_SIGNATURE, signature);
+      stringBuilder.append(tab);
+      appendJavaDeclaration(name, signature);
+    }
+
+    stringBuilder.append(tab);
+
+    appendDescriptor(FIELD_DESCRIPTOR, descriptor);
+    stringBuilder.append(' ').append(name);
+
+    stringBuilder.append('\n');
+    text.add(stringBuilder.toString());
+    return addNewTextifier(null);
   }
 
   @Override
@@ -672,6 +708,31 @@ public class Textifier extends Printer {
     if (name != null) {
       stringBuilder.append(name).append('=');
     }
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Record components
+  // -----------------------------------------------------------------------------------------------
+
+  @Override
+  public Textifier visitRecordComponentAnnotation(final String descriptor, final boolean visible) {
+    return visitAnnotation(descriptor, visible);
+  }
+
+  @Override
+  public Printer visitRecordComponentTypeAnnotation(
+      final int typeRef, final TypePath typePath, final String descriptor, final boolean visible) {
+    return visitTypeAnnotation(typeRef, typePath, descriptor, visible);
+  }
+
+  @Override
+  public void visitRecordComponentAttribute(final Attribute attribute) {
+    visitAttribute(attribute);
+  }
+
+  @Override
+  public void visitRecordComponentEnd() {
+    // Nothing to do.
   }
 
   // -----------------------------------------------------------------------------------------------

@@ -53,7 +53,7 @@ public class InstructionAdapter extends MethodVisitor {
    * @throws IllegalStateException If a subclass calls this constructor.
    */
   public InstructionAdapter(final MethodVisitor methodVisitor) {
-    this(Opcodes.ASM7, methodVisitor);
+    this(/* latest api = */ Opcodes.ASM9, methodVisitor);
     if (getClass() != InstructionAdapter.class) {
       throw new IllegalStateException();
     }
@@ -63,7 +63,8 @@ public class InstructionAdapter extends MethodVisitor {
    * Constructs a new {@link InstructionAdapter}.
    *
    * @param api the ASM API version implemented by this visitor. Must be one of {@link
-   *     Opcodes#ASM4}, {@link Opcodes#ASM5}, {@link Opcodes#ASM6} or {@link Opcodes#ASM7}.
+   *     Opcodes#ASM4}, {@link Opcodes#ASM5}, {@link Opcodes#ASM6}, {@link Opcodes#ASM7}, {@link
+   *     Opcodes#ASM8} or {@link Opcodes#ASM9}.
    * @param methodVisitor the method visitor to which this adapter delegates calls.
    */
   protected InstructionAdapter(final int api, final MethodVisitor methodVisitor) {
@@ -621,7 +622,7 @@ public class InstructionAdapter extends MethodVisitor {
             || (value instanceof Type && ((Type) value).getSort() == Type.METHOD))) {
       throw new UnsupportedOperationException("This feature requires ASM5");
     }
-    if (api != Opcodes.ASM7 && value instanceof ConstantDynamic) {
+    if (api < Opcodes.ASM7 && value instanceof ConstantDynamic) {
       throw new UnsupportedOperationException("This feature requires ASM7");
     }
     if (value instanceof Integer) {
