@@ -51,7 +51,7 @@ import java.util.LinkedHashMap;
 import java.util.Properties;
 
 public class JByteMod extends JFrame {
-	private static final String version = "2.0";
+	private static final String version = "2.1";
     private static final String jbytemod = "JByteMod Remastered v" + version;
     
     public static File workingDir = new File(".");
