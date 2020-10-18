@@ -1,4 +1,5 @@
-/***
+<html>
+<!--
  * ASM: a very small and fast Java bytecode manipulation framework
  * Copyright (c) 2000-2011 INRIA, France Telecom
  * All rights reserved.
@@ -26,62 +27,41 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
- */
-package org.objectweb.asm.tree;
+-->
+<body>
 
-import java.util.Map;
+<p>
+Provides a framework for static code analysis based on the asm.tree package.
+</p>
 
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+<p>
+Basic usage:
+</p>
 
-/**
- * A node that represents an IINC instruction.
- * 
- * @author Eric Bruneton
- */
-public class IincInsnNode extends AbstractInsnNode {
+<pre>
+ClassReader cr = new ClassReader(bytecode);
+ClassNode cn = new ClassNode();
+cr.accept(cn, ClassReader.SKIP_DEBUG);
 
-  /**
-   * Index of the local variable to be incremented.
-   */
-  public int var;
-
-  /**
-   * Amount to increment the local variable by.
-   */
-  public int incr;
-
-  public IincInsnNode() {
-    super(Opcodes.IINC);
-  }
-
-  /**
-   * Constructs a new {@link IincInsnNode}.
-   * 
-   * @param var
-   *          index of the local variable to be incremented.
-   * @param incr
-   *          increment amount to increment the local variable by.
-   */
-  public IincInsnNode(final int var, final int incr) {
-    super(Opcodes.IINC);
-    this.var = var;
-    this.incr = incr;
-  }
-
-  @Override
-  public int getType() {
-    return IINC_INSN;
-  }
-
-  @Override
-  public void accept(final MethodVisitor mv) {
-    mv.visitIincInsn(var, incr);
-    acceptAnnotations(mv);
-  }
-
-  @Override
-  public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
-    return new IincInsnNode(var, incr).cloneAnnotations(this);
-  }
+List methods = cn.methods;
+for (int i = 0; i < methods.size(); ++i) {
+    MethodNode method = (MethodNode) methods.get(i);
+    if (method.instructions.size() > 0) {
+        Analyzer a = new Analyzer(new BasicInterpreter());
+        a.analyze(cn.name, method);
+        Frame[] frames = a.getFrames();
+        // Elements of the frames arrray now contains info for each instruction
+        // from the analyzed method. BasicInterpreter creates BasicValue, that
+        // is using simplified type system that distinguishes the UNINITIALZED,
+        // INT, FLOAT, LONG, DOUBLE, REFERENCE and RETURNADDRESS types.
+        ...
+    }
 }
+</pre>
+
+<p>
+@since ASM 1.4.3
+</p>
+
+</body>
+</html>

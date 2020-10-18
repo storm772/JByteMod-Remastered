@@ -1,128 +1,113 @@
-// ASM: a very small and fast Java bytecode manipulation framework
-// Copyright (c) 2000-2011 INRIA, France Telecom
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions
-// are met:
-// 1. Redistributions of source code must retain the above copyright
-//    notice, this list of conditions and the following disclaimer.
-// 2. Redistributions in binary form must reproduce the above copyright
-//    notice, this list of conditions and the following disclaimer in the
-//    documentation and/or other materials provided with the distribution.
-// 3. Neither the name of the copyright holders nor the names of its
-//    contributors may be used to endorse or promote products derived from
-//    this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
-// THE POSSIBILITY OF SUCH DAMAGE.
+/***
+ * ASM: a very small and fast Java bytecode manipulation framework
+ * Copyright (c) 2000-2011 INRIA, France Telecom
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holders nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGE.
+ */
 package org.objectweb.asm.tree.analysis;
 
 import java.util.List;
+
 import org.objectweb.asm.Type;
 
 /**
- * An extended {@link BasicVerifier} that performs more precise verifications. This verifier
- * computes exact class types, instead of using a single "object reference" type (as done in {@link
- * BasicVerifier}).
- *
+ * An extended {@link BasicVerifier} that performs more precise verifications.
+ * This verifier computes exact class types, instead of using a single "object
+ * reference" type (as done in the {@link BasicVerifier}).
+ * 
  * @author Eric Bruneton
  * @author Bing Ran
  */
 public class SimpleVerifier extends BasicVerifier {
 
-  /** The type of the class that is verified. */
+  /**
+   * The class that is verified.
+   */
   private final Type currentClass;
 
-  /** The type of the super class of the class that is verified. */
+  /**
+   * The super class of the class that is verified.
+   */
   private final Type currentSuperClass;
 
-  /** The types of the interfaces directly implemented by the class that is verified. */
+  /**
+   * The interfaces implemented by the class that is verified.
+   */
   private final List<Type> currentClassInterfaces;
 
-  /** Whether the class that is verified is an interface. */
+  /**
+   * If the class that is verified is an interface.
+   */
   private final boolean isInterface;
 
-  /** The loader to use to load the referenced classes. */
+  /**
+   * The loader to use for referenced classes.
+   */
   private ClassLoader loader = getClass().getClassLoader();
 
   /**
-   * Constructs a new {@link SimpleVerifier}. <i>Subclasses must not use this constructor</i>.
-   * Instead, they must use the {@link #SimpleVerifier(int, Type, Type, List, boolean)} version.
+   * Constructs a new {@link SimpleVerifier}.
    */
   public SimpleVerifier() {
     this(null, null, false);
   }
 
   /**
-   * Constructs a new {@link SimpleVerifier} to verify a specific class. This class will not be
-   * loaded into the JVM since it may be incorrect. <i>Subclasses must not use this constructor</i>.
-   * Instead, they must use the {@link #SimpleVerifier(int, Type, Type, List, boolean)} version.
-   *
-   * @param currentClass the type of the class to be verified.
-   * @param currentSuperClass the type of the super class of the class to be verified.
-   * @param isInterface whether the class to be verifier is an interface.
+   * Constructs a new {@link SimpleVerifier} to verify a specific class. This
+   * class will not be loaded into the JVM since it may be incorrect.
+   * 
+   * @param currentClass
+   *          the class that is verified.
+   * @param currentSuperClass
+   *          the super class of the class that is verified.
+   * @param isInterface
+   *          if the class that is verified is an interface.
    */
-  public SimpleVerifier(
-      final Type currentClass, final Type currentSuperClass, final boolean isInterface) {
+  public SimpleVerifier(final Type currentClass, final Type currentSuperClass, final boolean isInterface) {
     this(currentClass, currentSuperClass, null, isInterface);
   }
 
   /**
-   * Constructs a new {@link SimpleVerifier} to verify a specific class. This class will not be
-   * loaded into the JVM since it may be incorrect. <i>Subclasses must not use this constructor</i>.
-   * Instead, they must use the {@link #SimpleVerifier(int, Type, Type, List, boolean)} version.
-   *
-   * @param currentClass the type of the class to be verified.
-   * @param currentSuperClass the type of the super class of the class to be verified.
-   * @param currentClassInterfaces the types of the interfaces directly implemented by the class to
-   *     be verified.
-   * @param isInterface whether the class to be verifier is an interface.
+   * Constructs a new {@link SimpleVerifier} to verify a specific class. This
+   * class will not be loaded into the JVM since it may be incorrect.
+   * 
+   * @param currentClass
+   *          the class that is verified.
+   * @param currentSuperClass
+   *          the super class of the class that is verified.
+   * @param currentClassInterfaces
+   *          the interfaces implemented by the class that is verified.
+   * @param isInterface
+   *          if the class that is verified is an interface.
    */
-  public SimpleVerifier(
-      final Type currentClass,
-      final Type currentSuperClass,
-      final List<Type> currentClassInterfaces,
-      final boolean isInterface) {
-    this(
-        /* latest api = */ ASM9,
-        currentClass,
-        currentSuperClass,
-        currentClassInterfaces,
-        isInterface);
-    if (getClass() != SimpleVerifier.class) {
-      throw new IllegalStateException();
-    }
+  public SimpleVerifier(final Type currentClass, final Type currentSuperClass, final List<Type> currentClassInterfaces, final boolean isInterface) {
+    this(ASM6, currentClass, currentSuperClass, currentClassInterfaces, isInterface);
   }
 
-  /**
-   * Constructs a new {@link SimpleVerifier} to verify a specific class. This class will not be
-   * loaded into the JVM since it may be incorrect.
-   *
-   * @param api the ASM API version supported by this verifier. Must be one of {@link
-   *     org.objectweb.asm.Opcodes#ASM4}, {@link org.objectweb.asm.Opcodes#ASM5}, {@link
-   *     org.objectweb.asm.Opcodes#ASM6}, {@link org.objectweb.asm.Opcodes#ASM7}, {@link
-   *     org.objectweb.asm.Opcodes#ASM8} or or {@link org.objectweb.asm.Opcodes#ASM9}.
-   * @param currentClass the type of the class to be verified.
-   * @param currentSuperClass the type of the super class of the class to be verified.
-   * @param currentClassInterfaces the types of the interfaces directly implemented by the class to
-   *     be verified.
-   * @param isInterface whether the class to be verifier is an interface.
-   */
-  protected SimpleVerifier(
-      final int api,
-      final Type currentClass,
-      final Type currentSuperClass,
-      final List<Type> currentClassInterfaces,
+  protected SimpleVerifier(final int api, final Type currentClass, final Type currentSuperClass, final List<Type> currentClassInterfaces,
       final boolean isInterface) {
     super(api);
     this.currentClass = currentClass;
@@ -132,9 +117,12 @@ public class SimpleVerifier extends BasicVerifier {
   }
 
   /**
-   * Sets the <code>ClassLoader</code> to be used in {@link #getClass}.
-   *
-   * @param loader the <code>ClassLoader</code> to use.
+   * Set the <code>ClassLoader</code> which will be used to load referenced
+   * classes. This is useful if you are verifying multiple interdependent
+   * classes.
+   * 
+   * @param loader
+   *          a <code>ClassLoader</code> to use
    */
   public void setClassLoader(final ClassLoader loader) {
     this.loader = loader;
@@ -149,37 +137,34 @@ public class SimpleVerifier extends BasicVerifier {
     boolean isArray = type.getSort() == Type.ARRAY;
     if (isArray) {
       switch (type.getElementType().getSort()) {
-        case Type.BOOLEAN:
-        case Type.CHAR:
-        case Type.BYTE:
-        case Type.SHORT:
-          return new BasicValue(type);
-        default:
-          break;
+      case Type.BOOLEAN:
+      case Type.CHAR:
+      case Type.BYTE:
+      case Type.SHORT:
+        return new BasicValue(type);
       }
     }
 
-    BasicValue value = super.newValue(type);
-    if (BasicValue.REFERENCE_VALUE.equals(value)) {
+    BasicValue v = super.newValue(type);
+    if (BasicValue.REFERENCE_VALUE.equals(v)) {
       if (isArray) {
-        value = newValue(type.getElementType());
-        StringBuilder descriptor = new StringBuilder();
+        v = newValue(type.getElementType());
+        String desc = v.getType().getDescriptor();
         for (int i = 0; i < type.getDimensions(); ++i) {
-          descriptor.append('[');
+          desc = '[' + desc;
         }
-        descriptor.append(value.getType().getDescriptor());
-        value = new BasicValue(Type.getType(descriptor.toString()));
+        v = new BasicValue(Type.getType(desc));
       } else {
-        value = new BasicValue(type);
+        v = new BasicValue(type);
       }
     }
-    return value;
+    return v;
   }
 
   @Override
   protected boolean isArrayValue(final BasicValue value) {
-    Type type = value.getType();
-    return type != null && (type.getSort() == Type.ARRAY || type.equals(NULL_TYPE));
+    Type t = value.getType();
+    return t != null && ("Lnull;".equals(t.getDescriptor()) || t.getSort() == Type.ARRAY);
   }
 
   @Override
@@ -188,11 +173,11 @@ public class SimpleVerifier extends BasicVerifier {
     if (arrayType != null) {
       if (arrayType.getSort() == Type.ARRAY) {
         return newValue(Type.getType(arrayType.getDescriptor().substring(1)));
-      } else if (arrayType.equals(NULL_TYPE)) {
+      } else if ("Lnull;".equals(arrayType.getDescriptor())) {
         return objectArrayValue;
       }
     }
-    throw new AssertionError();
+    throw new Error("Internal error");
   }
 
   @Override
@@ -200,183 +185,122 @@ public class SimpleVerifier extends BasicVerifier {
     Type expectedType = expected.getType();
     Type type = value.getType();
     switch (expectedType.getSort()) {
-      case Type.INT:
-      case Type.FLOAT:
-      case Type.LONG:
-      case Type.DOUBLE:
-        return type.equals(expectedType);
-      case Type.ARRAY:
-      case Type.OBJECT:
-        if (type.equals(NULL_TYPE)) {
-          return true;
-        } else if (type.getSort() == Type.OBJECT || type.getSort() == Type.ARRAY) {
-          if (isAssignableFrom(expectedType, type)) {
-            return true;
-          } else if (getClass(expectedType).isInterface()) {
-            // The merge of class or interface types can only yield class types (because it is not
-            // possible in general to find an unambiguous common super interface, due to multiple
-            // inheritance). Because of this limitation, we need to relax the subtyping check here
-            // if 'value' is an interface.
-            return Object.class.isAssignableFrom(getClass(type));
-          } else {
-            return false;
-          }
-        } else {
-          return false;
-        }
-      default:
-        throw new AssertionError();
+    case Type.INT:
+    case Type.FLOAT:
+    case Type.LONG:
+    case Type.DOUBLE:
+      return type.equals(expectedType);
+    case Type.ARRAY:
+    case Type.OBJECT:
+      if ("Lnull;".equals(type.getDescriptor())) {
+        return true;
+      } else if (type.getSort() == Type.OBJECT || type.getSort() == Type.ARRAY) {
+        return isAssignableFrom(expectedType, type);
+      } else {
+        return false;
+      }
+    default:
+      throw new Error("Internal error");
     }
   }
 
   @Override
-  public BasicValue merge(final BasicValue value1, final BasicValue value2) {
-    if (!value1.equals(value2)) {
-      Type type1 = value1.getType();
-      Type type2 = value2.getType();
-      if (type1 != null
-          && (type1.getSort() == Type.OBJECT || type1.getSort() == Type.ARRAY)
-          && type2 != null
-          && (type2.getSort() == Type.OBJECT || type2.getSort() == Type.ARRAY)) {
-        if (type1.equals(NULL_TYPE)) {
-          return value2;
-        }
-        if (type2.equals(NULL_TYPE)) {
-          return value1;
-        }
-        if (isAssignableFrom(type1, type2)) {
-          return value1;
-        }
-        if (isAssignableFrom(type2, type1)) {
-          return value2;
-        }
-        int numDimensions = 0;
-        if (type1.getSort() == Type.ARRAY
-            && type2.getSort() == Type.ARRAY
-            && type1.getDimensions() == type2.getDimensions()
-            && type1.getElementType().getSort() == Type.OBJECT
-            && type2.getElementType().getSort() == Type.OBJECT) {
-          numDimensions = type1.getDimensions();
-          type1 = type1.getElementType();
-          type2 = type2.getElementType();
-        }
-        while (true) {
-          if (type1 == null || isInterface(type1)) {
-            return newArrayValue(Type.getObjectType("java/lang/Object"), numDimensions);
+  public BasicValue merge(final BasicValue v, final BasicValue w) {
+    if (!v.equals(w)) {
+      Type t = v.getType();
+      Type u = w.getType();
+      if (t != null && (t.getSort() == Type.OBJECT || t.getSort() == Type.ARRAY)) {
+        if (u != null && (u.getSort() == Type.OBJECT || u.getSort() == Type.ARRAY)) {
+          if ("Lnull;".equals(t.getDescriptor())) {
+            return w;
           }
-          type1 = getSuperClass(type1);
-          if (isAssignableFrom(type1, type2)) {
-            return newArrayValue(type1, numDimensions);
+          if ("Lnull;".equals(u.getDescriptor())) {
+            return v;
           }
+          if (isAssignableFrom(t, u)) {
+            return v;
+          }
+          if (isAssignableFrom(u, t)) {
+            return w;
+          }
+          // TODO case of array classes of the same dimension
+          // TODO should we look also for a common super interface?
+          // problem: there may be several possible common super
+          // interfaces
+          do {
+            if (t == null || isInterface(t)) {
+              return BasicValue.REFERENCE_VALUE;
+            }
+            t = getSuperClass(t);
+            if (isAssignableFrom(t, u)) {
+              return newValue(t);
+            }
+          } while (true);
         }
       }
       return BasicValue.UNINITIALIZED_VALUE;
     }
-    return value1;
+    return v;
   }
 
-  private BasicValue newArrayValue(final Type type, final int dimensions) {
-    if (dimensions == 0) {
-      return newValue(type);
-    } else {
-      StringBuilder descriptor = new StringBuilder();
-      for (int i = 0; i < dimensions; ++i) {
-        descriptor.append('[');
-      }
-      descriptor.append(type.getDescriptor());
-      return newValue(Type.getType(descriptor.toString()));
-    }
-  }
-
-  /**
-   * Returns whether the given type corresponds to the type of an interface. The default
-   * implementation of this method loads the class and uses the reflection API to return its result
-   * (unless the given type corresponds to the class being verified).
-   *
-   * @param type a type.
-   * @return whether 'type' corresponds to an interface.
-   */
-  protected boolean isInterface(final Type type) {
-    if (currentClass != null && currentClass.equals(type)) {
+  protected boolean isInterface(final Type t) {
+    if (currentClass != null && t.equals(currentClass)) {
       return isInterface;
     }
-    return getClass(type).isInterface();
+    return getClass(t).isInterface();
   }
 
-  /**
-   * Returns the type corresponding to the super class of the given type. The default implementation
-   * of this method loads the class and uses the reflection API to return its result (unless the
-   * given type corresponds to the class being verified).
-   *
-   * @param type a type.
-   * @return the type corresponding to the super class of 'type'.
-   */
-  protected Type getSuperClass(final Type type) {
-    if (currentClass != null && currentClass.equals(type)) {
+  protected Type getSuperClass(final Type t) {
+    if (currentClass != null && t.equals(currentClass)) {
       return currentSuperClass;
     }
-    Class<?> superClass = getClass(type).getSuperclass();
-    return superClass == null ? null : Type.getType(superClass);
+    Class<?> c = getClass(t).getSuperclass();
+    return c == null ? null : Type.getType(c);
   }
 
-  /**
-   * Returns whether the class corresponding to the first argument is either the same as, or is a
-   * superclass or superinterface of the class corresponding to the second argument. The default
-   * implementation of this method loads the classes and uses the reflection API to return its
-   * result (unless the result can be computed from the class being verified, and the types of its
-   * super classes and implemented interfaces).
-   *
-   * @param type1 a type.
-   * @param type2 another type.
-   * @return whether the class corresponding to 'type1' is either the same as, or is a superclass or
-   *     superinterface of the class corresponding to 'type2'.
-   */
-  protected boolean isAssignableFrom(final Type type1, final Type type2) {
-    if (type1.equals(type2)) {
+  protected boolean isAssignableFrom(final Type t, final Type u) {
+    if (t.equals(u)) {
       return true;
     }
-    if (currentClass != null && currentClass.equals(type1)) {
-      if (getSuperClass(type2) == null) {
+    if (currentClass != null && t.equals(currentClass)) {
+      if (getSuperClass(u) == null) {
         return false;
       } else {
         if (isInterface) {
-          return type2.getSort() == Type.OBJECT || type2.getSort() == Type.ARRAY;
+          return u.getSort() == Type.OBJECT || u.getSort() == Type.ARRAY;
         }
-        return isAssignableFrom(type1, getSuperClass(type2));
+        return isAssignableFrom(t, getSuperClass(u));
       }
     }
-    if (currentClass != null && currentClass.equals(type2)) {
-      if (isAssignableFrom(type1, currentSuperClass)) {
+    if (currentClass != null && u.equals(currentClass)) {
+      if (isAssignableFrom(t, currentSuperClass)) {
         return true;
       }
       if (currentClassInterfaces != null) {
-        for (Type currentClassInterface : currentClassInterfaces) {
-          if (isAssignableFrom(type1, currentClassInterface)) {
+        for (int i = 0; i < currentClassInterfaces.size(); ++i) {
+          Type v = currentClassInterfaces.get(i);
+          if (isAssignableFrom(t, v)) {
             return true;
           }
         }
       }
       return false;
     }
-    return getClass(type1).isAssignableFrom(getClass(type2));
+    Class<?> tc = getClass(t);
+    if (tc.isInterface()) {
+      tc = Object.class;
+    }
+    return tc.isAssignableFrom(getClass(u));
   }
 
-  /**
-   * Loads the class corresponding to the given type. The class is loaded with the class loader
-   * specified with {@link #setClassLoader}, or with the class loader of this class if no class
-   * loader was specified.
-   *
-   * @param type a type.
-   * @return the class corresponding to 'type'.
-   */
-  protected Class<?> getClass(final Type type) {
+  protected Class<?> getClass(final Type t) {
     try {
-      if (type.getSort() == Type.ARRAY) {
-        return Class.forName(type.getDescriptor().replace('/', '.'), false, loader);
+      if (t.getSort() == Type.ARRAY) {
+        return Class.forName(t.getDescriptor().replace('/', '.'), false, loader);
       }
-      return Class.forName(type.getClassName(), false, loader);
+      return Class.forName(t.getClassName(), false, loader);
     } catch (ClassNotFoundException e) {
-      throw new TypeNotPresentException(e.toString(), e);
+      throw new RuntimeException(e.toString());
     }
   }
 }

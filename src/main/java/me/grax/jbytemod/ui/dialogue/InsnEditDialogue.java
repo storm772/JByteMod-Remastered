@@ -283,7 +283,7 @@ public class InsnEditDialogue extends ClassDialogue {
         if (o != null && o.equals("opc")) {
             JComboBox<String> opcode = (JComboBox<String>) wp.getComponent(0);
             AbstractInsnNode ain = (AbstractInsnNode) object;
-            ((MethodInsnNode) ain).setOpcode(OpUtils.getOpcodeIndex(String.valueOf(opcode.getSelectedItem()).toUpperCase()));
+            ain.setOpcode(OpUtils.getOpcodeIndex(String.valueOf(opcode.getSelectedItem()).toUpperCase()));
             return null;
         } else if (type.getName().equals(LabelNode.class.getName())) {
             JComboBox<LabelNode> label = (JComboBox<LabelNode>) wp.getComponent(0);
