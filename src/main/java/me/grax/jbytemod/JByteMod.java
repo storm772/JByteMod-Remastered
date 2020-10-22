@@ -1,6 +1,8 @@
 package me.grax.jbytemod;
 
 import com.sun.tools.attach.VirtualMachine;
+
+import de.xbrowniecodez.jbytemod.securitymanager.CustomSecurityManager;
 import me.grax.jbytemod.discord.Discord;
 import me.grax.jbytemod.logging.Logging;
 import me.grax.jbytemod.plugin.Plugin;
@@ -51,7 +53,7 @@ import java.util.LinkedHashMap;
 import java.util.Properties;
 
 public class JByteMod extends JFrame {
-	private static final String version = "2.1.1";
+	private static final String version = "2.1.2";
     private static final String jbytemod = "JByteMod Remastered v" + version;
     
     public static File workingDir = new File(".");
@@ -95,6 +97,8 @@ public class JByteMod extends JFrame {
      * Create the frame.
      */
     public JByteMod(boolean agent) {
+    	CustomSecurityManager csm = new CustomSecurityManager();
+    	csm.start();
         if (ops.get("use_rt").getBoolean()) {
             new FrameGen().start();
         }
