@@ -3,6 +3,7 @@ package me.grax.jbytemod;
 import com.sun.tools.attach.VirtualMachine;
 
 import de.xbrowniecodez.jbytemod.securitymanager.CustomSecurityManager;
+import de.xbrowniecodez.jbytemod.utils.UpdateChecker;
 import me.grax.jbytemod.discord.Discord;
 import me.grax.jbytemod.logging.Logging;
 import me.grax.jbytemod.plugin.Plugin;
@@ -53,7 +54,7 @@ import java.util.LinkedHashMap;
 import java.util.Properties;
 
 public class JByteMod extends JFrame {
-	private static final String version = "2.1.2";
+	public final static String version = "2.1.3";
     private static final String jbytemod = "JByteMod Remastered v" + version;
     
     public static File workingDir = new File(".");
@@ -95,8 +96,10 @@ public class JByteMod extends JFrame {
 
     /**
      * Create the frame.
+     * @throws Exception 
      */
-    public JByteMod(boolean agent) {
+    public JByteMod(boolean agent) throws Exception {
+    	new UpdateChecker();
     	CustomSecurityManager csm = new CustomSecurityManager();
     	csm.start();
         if (ops.get("use_rt").getBoolean()) {
@@ -151,7 +154,7 @@ public class JByteMod extends JFrame {
         }
     }
 
-    public static void agentmain(String agentArgs, Instrumentation ins) {
+    public static void agentmain(String agentArgs, Instrumentation ins) throws Exception {
         if (!ins.isRedefineClassesSupported()) {
             JOptionPane.showMessageDialog(null, "Class redefinition is disabled, cannot attach!");
             return;
