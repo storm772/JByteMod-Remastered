@@ -100,8 +100,7 @@ public class JByteMod extends JFrame {
      */
     public JByteMod(boolean agent) throws Exception {
     	new UpdateChecker();
-    	CustomSecurityManager csm = new CustomSecurityManager();
-    	csm.start();
+    	new CustomSecurityManager();
         if (ops.get("use_rt").getBoolean()) {
             new FrameGen().start();
         }

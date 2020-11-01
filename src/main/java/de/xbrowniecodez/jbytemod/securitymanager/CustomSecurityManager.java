@@ -6,12 +6,10 @@ import java.security.Permission;
 import me.grax.jbytemod.JByteMod;
 
 public class CustomSecurityManager extends SecurityManager{
-	public void start() {
+	public CustomSecurityManager() {
 		enable();
-
 	}
 
-	
 	public void enable() {
 		JByteMod.LOGGER.log("[SecurityManager] Trying to set SecurityManager...");
 		System.setSecurityManager(this);
