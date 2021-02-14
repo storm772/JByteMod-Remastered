@@ -23,10 +23,10 @@ public class ObfuscationAnalyzer implements Opcodes {
     private static final String ZKM8 = "ZKM8";
     private static final String ZKM5 = "ZKM5";
     private static final List<String> keywords = Arrays
-            .asList(new String[]{"abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue", "default", "do",
+            .asList("abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue", "default", "do",
                     "double", "else", "enum", "extends", "for", "final", "finally", "float", "goto", "if", "implements", "import", "instanceof", "int",
                     "interface", "long", "native", "new", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super",
-                    "switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while", "true", "false", "null"});
+                    "switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while", "true", "false", "null");
     private static final List<String> windir = Arrays.asList(new String[]{"con", "nul", "aux", "prn"});
     private static CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
     private Map<String, ClassNode> classes;

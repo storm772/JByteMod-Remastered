@@ -16,6 +16,47 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+				<executions>
+					<execution>
+						<id>install-attach</id>
+						<phase>clean</phase>
+						<configuration>
+							<file>${basedir}/lib/attach-1.7.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>com.sun</groupId>
+							<artifactId>attach</artifactId>
+							<version>1.7</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>install-weblaf</id>
+						<phase>clean</phase>
+						<configuration>
+							<file>${basedir}/lib/weblaf-complete-1.29-fixed.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>com.weblaf</groupId>
+							<artifactId>weblaf</artifactId>
+							<version>1.2.9</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.0.2</version>
 				<configuration>
@@ -89,6 +130,11 @@
 			<url>https://jcenter.bintray.com</url>
 			<name>jcenter-bintray</name>
 		</repository>
+		<repository>
+			<id>oss-sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<name>oss-sonatype</name>
+		</repository>
 	</repositories>
 
 
@@ -108,25 +154,30 @@
 			<artifactId>java-discord-rpc</artifactId>
 			<version>2.0.2</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.bitbucket.mstrobel</groupId>-->
+<!--			<artifactId>procyon-core</artifactId>-->
+<!--			<version>0.5.36</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.bitbucket.mstrobel</groupId>
 			<artifactId>procyon-core</artifactId>
-			<version>0.5.36</version>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bitbucket.mstrobel</groupId>
 			<artifactId>procyon-expressions</artifactId>
-			<version>0.5.36</version>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bitbucket.mstrobel</groupId>
 			<artifactId>procyon-reflection</artifactId>
-			<version>0.5.36</version>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bitbucket.mstrobel</groupId>
 			<artifactId>procyon-compilertools</artifactId>
-			<version>0.5.36</version>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -145,16 +196,25 @@
 			<groupId>com.weblaf</groupId>
 			<artifactId>weblaf</artifactId>
 			<version>1.2.9</version>
+<!--			<systemPath>${basedir}/lib/weblaf-complete-1.29-fixed.jar</systemPath>-->
+<!--			<scope>system</scope>-->
+		</dependency>
+		<dependency>
+			<groupId>com.formdev</groupId>
+			<artifactId>flatlaf</artifactId>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.benf</groupId>
 			<artifactId>cfr</artifactId>
-			<version>0.150</version>
+			<version>0.151</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun</groupId>
 			<artifactId>attach</artifactId>
 			<version>1.7</version>
+<!--			<systemPath>${basedir}/lib/attach-1.7.jar</systemPath>-->
+<!--			<scope>system</scope>-->
 		</dependency>
 		<dependency>
 			<groupId>commons-cli</groupId>

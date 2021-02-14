@@ -10,6 +10,12 @@ public class LookUtils {
     public static void setLAF() {
         try {
             JByteMod.LOGGER.log("Setting default Look and Feel");
+            if (JByteMod.ops.get("use_flatdark").getBoolean()) {
+                if (changeLAF("com.formdev.flatlaf.FlatDarkLaf")) {
+                    return;
+                }
+            }
+
             if (JByteMod.ops.get("use_weblaf").getBoolean()) {
                 WebLookAndFeel.install();
             } else {

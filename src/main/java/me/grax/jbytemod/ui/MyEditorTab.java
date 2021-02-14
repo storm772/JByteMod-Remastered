@@ -58,6 +58,7 @@ public class MyEditorTab extends JPanel {
                 repaint();
             }
         });
+
         WebBreadcrumbToggleButton infoBtn = new WebBreadcrumbToggleButton("Info");
         infoBtn.addActionListener(e -> {
             if (center.getComponent(0) != info) {

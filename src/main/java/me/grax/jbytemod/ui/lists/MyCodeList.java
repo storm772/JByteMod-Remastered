@@ -36,7 +36,7 @@ public class MyCodeList extends JList<InstrEntry> {
         this.setFocusable(false);
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                InstrEntry entry = (InstrEntry) MyCodeList.this.getSelectedValue();
+                InstrEntry entry = MyCodeList.this.getSelectedValue();
                 if (entry == null) {
                     createPopupForEmptyList(jam);
                     return;

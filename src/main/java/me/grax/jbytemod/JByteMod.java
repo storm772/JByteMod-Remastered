@@ -1,7 +1,6 @@
 package me.grax.jbytemod;
 
 import com.sun.tools.attach.VirtualMachine;
-
 import de.xbrowniecodez.jbytemod.securitymanager.CustomSecurityManager;
 import de.xbrowniecodez.jbytemod.utils.UpdateChecker;
 import me.grax.jbytemod.discord.Discord;
@@ -10,7 +9,6 @@ import me.grax.jbytemod.plugin.Plugin;
 import me.grax.jbytemod.plugin.PluginManager;
 import me.grax.jbytemod.res.LanguageRes;
 import me.grax.jbytemod.res.Options;
-import me.grax.jbytemod.scanner.ScannerThread;
 import me.grax.jbytemod.ui.*;
 import me.grax.jbytemod.ui.graph.ControlFlowPanel;
 import me.grax.jbytemod.ui.lists.LVPList;
@@ -44,14 +42,12 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Properties;
 
 public class JByteMod extends JFrame {
 	public final static String version = "2.1.3";

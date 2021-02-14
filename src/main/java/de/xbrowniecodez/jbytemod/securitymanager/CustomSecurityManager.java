@@ -18,7 +18,7 @@ public class CustomSecurityManager extends SecurityManager{
 
 	@Override
 	public void checkConnect(String host, int port) {
-		JByteMod.LOGGER.log("[Security Manager] Blocked connection");
+		JByteMod.LOGGER.log(String.format("[Security Manager] Blocked a connection to %s:%s", host, port));
 		SneakyThrow.sneakyThrow(new SocketTimeoutException("[SecurityManager] Connection blocked."));
 		
 
