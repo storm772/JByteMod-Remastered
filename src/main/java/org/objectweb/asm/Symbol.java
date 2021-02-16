@@ -37,7 +37,7 @@ package org.objectweb.asm;
  *     4.7.23</a>
  * @author Eric Bruneton
  */
-abstract class Symbol {
+public abstract class Symbol {
 
   // Tag values for the constant pool entries (using the same order as in the JVMS).
 
@@ -116,7 +116,7 @@ abstract class Symbol {
    * The index of this symbol in the constant pool, in the BootstrapMethods attribute, or in the
    * (ASM specific) type table of a class (depending on the {@link #tag} value).
    */
-  final int index;
+  public final int index;
 
   /**
    * A tag indicating the type of this symbol. Must be one of the static tag values defined in this

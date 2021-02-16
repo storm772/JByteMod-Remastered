@@ -40,7 +40,7 @@ package org.objectweb.asm;
  * @author Remi Forax
  * @author Eric Bruneton
  */
-final class ModuleWriter extends ModuleVisitor {
+public final class ModuleWriter extends ModuleVisitor {
 
   /** Where the constants used in this AnnotationWriter must be stored. */
   private final SymbolTable symbolTable;
@@ -93,7 +93,7 @@ final class ModuleWriter extends ModuleVisitor {
   /** The main_class_index field of the JVMS ModuleMainClass attribute, or 0. */
   private int mainClassIndex;
 
-  ModuleWriter(final SymbolTable symbolTable, final int name, final int access, final int version) {
+  public ModuleWriter(final SymbolTable symbolTable, final int name, final int access, final int version) {
     super(/* latest api = */ Opcodes.ASM9);
     this.symbolTable = symbolTable;
     this.moduleNameIndex = name;
