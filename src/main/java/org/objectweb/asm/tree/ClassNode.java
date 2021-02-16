@@ -391,7 +391,11 @@ public class ClassNode extends ClassVisitor {
     }
     // visits module
     if (module != null) {
+        try {
       module.accept(cv);
+        } catch (NullPointerException npe) {
+            
+        }
     }
     // visits outer class
     if (outerClass != null) {
