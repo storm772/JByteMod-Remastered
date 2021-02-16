@@ -196,8 +196,8 @@
 			<groupId>com.weblaf</groupId>
 			<artifactId>weblaf</artifactId>
 			<version>1.2.9</version>
-<!--			<systemPath>${basedir}/lib/weblaf-complete-1.29-fixed.jar</systemPath>-->
-<!--			<scope>system</scope>-->
+			<systemPath>${basedir}/lib/weblaf-complete-1.29-fixed.jar</systemPath>
+			<scope>system</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.formdev</groupId>
@@ -213,8 +213,8 @@
 			<groupId>com.sun</groupId>
 			<artifactId>attach</artifactId>
 			<version>1.7</version>
-<!--			<systemPath>${basedir}/lib/attach-1.7.jar</systemPath>-->
-<!--			<scope>system</scope>-->
+			<systemPath>${basedir}/lib/attach-1.7.jar</systemPath>
+			<scope>system</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-cli</groupId>
