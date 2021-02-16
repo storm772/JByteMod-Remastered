@@ -75,7 +75,7 @@ public class ClassWriter extends ClassVisitor {
   private int version;
 
   /** The symbol table for this class (contains the constant_pool and the BootstrapMethods). */
-  protected final SymbolTable symbolTable;
+  private final SymbolTable symbolTable;
 
   /**
    * The access_flags field of the JVMS ClassFile structure. This field can contain ASM specific
@@ -166,7 +166,7 @@ public class ClassWriter extends ClassVisitor {
   private AnnotationWriter lastRuntimeInvisibleTypeAnnotation;
 
   /** The Module attribute of this class, or {@literal null}. */
-  protected ModuleWriter moduleWriter;
+  private ModuleWriter moduleWriter;
 
   /** The host_class_index field of the NestHost attribute, or 0. */
   private int nestHostClassIndex;
@@ -307,7 +307,7 @@ public class ClassWriter extends ClassVisitor {
   }
 
   @Override
-  public ModuleVisitor visitModule(
+  public final ModuleVisitor visitModule(
       final String name, final int access, final String version) {
     return moduleWriter =
         new ModuleWriter(

@@ -8,8 +8,6 @@ import org.apache.tools.zip.ZipOutputStream;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
 
-import de.xbrowniecodez.jbytemod.asm.CustomClassWriter;
-
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +37,7 @@ public class SaveTask extends SwingWorker<Void, Integer> {
                 JByteMod.LOGGER.log("Writing..");
                 if (this.file.isSingleEntry()) {
                     ClassNode node = classes.values().iterator().next();
-                    CustomClassWriter writer = new CustomClassWriter(flags);
+                    ClassWriter writer = new ClassWriter(flags);
                     node.accept(writer);
                     publish(50);
                     JByteMod.LOGGER.log("Saving..");
@@ -55,7 +53,7 @@ public class SaveTask extends SwingWorker<Void, Integer> {
                 for (String s : classes.keySet()) {
                     try{
                         ClassNode node = classes.get(s);
-                        CustomClassWriter writer = new CustomClassWriter(flags);
+                        ClassWriter writer = new ClassWriter(flags);
                         node.accept(writer);
                         outputBytes.put(s + ".class", writer.toByteArray());
                         publish((int) ((i++ / size) * 50d));
