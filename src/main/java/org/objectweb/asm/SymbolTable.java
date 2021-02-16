@@ -37,7 +37,7 @@ package org.objectweb.asm;
  * @see <a href="https://docs.oracle.com/javase/specs/jvms/se9/html/jvms-4.html#jvms-4.7.23">JVMS
  *     4.7.23</a>
  */
-final class SymbolTable {
+public final class SymbolTable {
 
   /**
    * The ClassWriter to which this SymbolTable belongs. This is only used to get access to {@link
@@ -760,7 +760,7 @@ final class SymbolTable {
    * @param value a string.
    * @return a new or already existing Symbol with the given value.
    */
-  int addConstantUtf8(final String value) {
+  public int addConstantUtf8(final String value) {
     int hashCode = hash(Symbol.CONSTANT_UTF8_TAG, value);
     Entry entry = get(hashCode);
     while (entry != null) {
@@ -968,7 +968,7 @@ final class SymbolTable {
    * @param moduleName a fully qualified name (using dots) of a module.
    * @return a new or already existing Symbol with the given value.
    */
-  Symbol addConstantModule(final String moduleName) {
+  public Symbol addConstantModule(final String moduleName) {
     return addConstantUtf8Reference(Symbol.CONSTANT_MODULE_TAG, moduleName);
   }
 
