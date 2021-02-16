@@ -10,6 +10,8 @@ import org.objectweb.asm.commons.JSRInlinerAdapter;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
+import de.xbrowniecodez.jbytemod.asm.CustomClassReader;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -96,7 +98,7 @@ public class Raccoon {
                 if (entry.getName().endsWith(".class")) {
                     byte[] classBytes = DataUtils.INSTANCE.toByteArray(zip.getInputStream(entry));
 
-                    ClassReader classReader = new ClassReader(classBytes);
+                    CustomClassReader classReader = new CustomClassReader(classBytes);
                     ClassNode classNode = new ClassNode();
 
                     classReader.accept(classNode, Opcodes.ASM6 | ClassReader.SKIP_FRAMES);

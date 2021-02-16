@@ -5,6 +5,8 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
 
+import de.xbrowniecodez.jbytemod.asm.CustomClassReader;
+
 import static org.objectweb.asm.Opcodes.*;
 
 public class ASMUtils {
@@ -36,7 +38,7 @@ public class ASMUtils {
      * @return
      */
     public static ClassNode getNode(final byte[] bytez) {
-        ClassReader cr = new ClassReader(bytez);
+        CustomClassReader cr = new CustomClassReader(bytez);
         ClassNode cn = new ClassNode();
         try {
             cr.accept(cn, ClassReader.EXPAND_FRAMES);

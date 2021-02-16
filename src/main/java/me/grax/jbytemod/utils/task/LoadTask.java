@@ -16,6 +16,8 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 
+import de.xbrowniecodez.jbytemod.asm.CustomClassReader;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +69,7 @@ public class LoadTask extends SwingWorker<Void, Integer> {
         if (bytes == null) {
             return null;
         }
-        ClassReader cr = new ClassReader(bytes);
+        CustomClassReader cr = new CustomClassReader(bytes);
         ClassNode cn = new ClassNode();
 
         cr.accept(cn, ClassReader.EXPAND_FRAMES);
