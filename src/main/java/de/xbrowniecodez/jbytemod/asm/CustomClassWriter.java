@@ -14,6 +14,8 @@ public class CustomClassWriter extends ClassWriter {
 
     @Override
     public final ModuleVisitor visitModule(final String name, final int access, final String version) {
+        try {
+            return moduleWriter = new ModuleWriter(symbolTable, symbolTable.addConstantModule(name).index, access,
                     version == null ? 0 : symbolTable.addConstantUtf8(version));
         } catch (NullPointerException npe) {
             return moduleWriter = new ModuleWriter(symbolTable, 0, 0 ,0);
