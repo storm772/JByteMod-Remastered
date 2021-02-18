@@ -43,11 +43,6 @@ public class CustomClassReader extends ClassReader {
         return (short) ((classBuffer[offset] & 255) << 8 | classBuffer[offset + 1] & 255);
     }
 
-    @Override
-    public void accept(ClassVisitor classVisitor, Attribute[] attributePrototypes, int parsingOptions) {
-        if (this.getCpInfoOffsets().length > 0)
-            super.accept(classVisitor, attributePrototypes, attributePrototypes.length);
-    }
 
     @Override
     public String readUTF8(int offset, char[] charBuffer) {
