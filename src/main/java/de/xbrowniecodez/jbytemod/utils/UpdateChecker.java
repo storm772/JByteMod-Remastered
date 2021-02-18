@@ -18,7 +18,7 @@ import me.grax.jbytemod.JByteMod;
 public class UpdateChecker {
 	public UpdateChecker() throws Exception {
 		JByteMod.LOGGER.log("Checking for updates...");
-		String sURL = "https://api.github.com/repos/real-xBrowniecodez/JByteMod-Remastered/releases/latest"; 																										// string
+		String sURL = "https://api.github.com/repos/xBrownieCodezV2/JByteMod-Remastered/releases/latest"; 																										// string
 		URL url = new URL(sURL);
 		URLConnection request = url.openConnection();
 		request.connect();
@@ -34,7 +34,7 @@ public class UpdateChecker {
 			if (result == 0) {
 				if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 					Desktop.getDesktop().browse(new URI(String.format(
-							"https://github.com/real-xBrownieCodez/JByteMod-Remastered/releases/download/%s/JByteMod-Remastered-%s.jar",
+							"https://github.com/xBrownieCodezV2/JByteMod-Remastered/releases/download/%s/JByteMod-Remastered-%s.jar",
 							version, version)));
 				}
 			}
