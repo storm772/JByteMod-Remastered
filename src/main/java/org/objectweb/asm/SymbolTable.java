@@ -27,6 +27,8 @@
 // THE POSSIBILITY OF SUCH DAMAGE.
 package org.objectweb.asm;
 
+
+
 /**
  * The constant pool entries, the BootstrapMethods attribute entries and the (ASM specific) type
  * table entries of a class.
@@ -996,16 +998,20 @@ public final class SymbolTable {
    * @return a new or already existing Symbol with the given value.
    */
   private Symbol addConstantUtf8Reference(final int tag, final String value) {
-    int hashCode = hash(tag, value);
-    Entry entry = get(hashCode);
-    while (entry != null) {
-      if (entry.tag == tag && entry.hashCode == hashCode && entry.value.equals(value)) {
-        return entry;
+      try {
+      int hashCode = hash(tag, value);
+      Entry entry = get(hashCode);
+      while (entry != null) {
+          if (entry.tag == tag && entry.hashCode == hashCode && entry.value.equals(value)) {
+              return entry;
+          }
+          entry = entry.next;
       }
-      entry = entry.next;
-    }
-    constantPool.put12(tag, addConstantUtf8(value));
-    return put(new Entry(constantPoolCount++, tag, value, hashCode));
+      constantPool.put12(tag, addConstantUtf8(value));
+      return put(new Entry(constantPoolCount++, tag, value, hashCode));
+      } catch(Exception e) {
+          return null;
+      }
   }
 
   /**
@@ -1238,7 +1244,11 @@ public final class SymbolTable {
   }
 
   private static int hash(final int tag, final String value) {
-    return 0x7FFFFFFF & (tag + value.hashCode());
+      try {
+          return 0x7FFFFFFF & (tag + value.hashCode());
+      } catch (Exception e) {
+          return 0;
+      }
   }
 
   private static int hash(final int tag, final String value1, final int value2) {

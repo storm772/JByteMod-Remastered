@@ -120,11 +120,15 @@ public final class ModuleWriter extends ModuleVisitor {
 
   @Override
   public void visitRequire(final String module, final int access, final String version) {
+      try {
     requires
         .putShort(symbolTable.addConstantModule(module).index)
         .putShort(access)
         .putShort(version == null ? 0 : symbolTable.addConstantUtf8(version));
     requiresCount++;
+      } catch (Exception e ) {
+          
+      }
   }
 
   @Override
