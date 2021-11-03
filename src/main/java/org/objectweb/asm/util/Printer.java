@@ -273,7 +273,7 @@ public abstract class Printer {
     "T_LONG"
   };
 
-  /** The names of the {@code tag} field values for {@link org.objectweb.asm.Handle}. */
+  /** The names of the {@code tag} field values for {@link Handle}. */
   public static final String[] HANDLE_TAG = {
     "",
     "H_GETFIELD",
@@ -340,14 +340,14 @@ public abstract class Printer {
    * @param access the class's access flags (see {@link Opcodes}). This parameter also indicates if
    *     the class is deprecated.
    * @param name the internal name of the class (see {@link
-   *     org.objectweb.asm.Type#getInternalName()}).
+   *     Type#getInternalName()}).
    * @param signature the signature of this class. May be {@literal null} if the class is not a
    *     generic one, and does not extend or implement generic classes or interfaces.
    * @param superName the internal of name of the super class (see {@link
-   *     org.objectweb.asm.Type#getInternalName()}). For interfaces, the super class is {@link
+   *     Type#getInternalName()}). For interfaces, the super class is {@link
    *     Object}. May be {@literal null}, but only for the {@link Object} class.
    * @param interfaces the internal names of the class's interfaces (see {@link
-   *     org.objectweb.asm.Type#getInternalName()}). May be {@literal null}.
+   *     Type#getInternalName()}). May be {@literal null}.
    */
   public abstract void visit(
       int version,
@@ -418,10 +418,10 @@ public abstract class Printer {
    * Class type annotation. See {@link org.objectweb.asm.ClassVisitor#visitTypeAnnotation}.
    *
    * @param typeRef a reference to the annotated type. The sort of this type reference must be
-   *     {@link org.objectweb.asm.TypeReference#CLASS_TYPE_PARAMETER}, {@link
-   *     org.objectweb.asm.TypeReference#CLASS_TYPE_PARAMETER_BOUND} or {@link
-   *     org.objectweb.asm.TypeReference#CLASS_EXTENDS}. See {@link
-   *     org.objectweb.asm.TypeReference}.
+   *     {@link TypeReference#CLASS_TYPE_PARAMETER}, {@link
+   *     TypeReference#CLASS_TYPE_PARAMETER_BOUND} or {@link
+   *     TypeReference#CLASS_EXTENDS}. See {@link
+   *     TypeReference}.
    * @param typePath the path to the annotated type argument, wildcard bound, array element type, or
    *     static inner type within 'typeRef'. May be {@literal null} if the annotation targets
    *     'typeRef' as a whole.
@@ -468,9 +468,9 @@ public abstract class Printer {
    * Class inner name. See {@link org.objectweb.asm.ClassVisitor#visitInnerClass}.
    *
    * @param name the internal name of an inner class (see {@link
-   *     org.objectweb.asm.Type#getInternalName()}).
+   *     Type#getInternalName()}).
    * @param outerName the internal name of the class to which the inner class belongs (see {@link
-   *     org.objectweb.asm.Type#getInternalName()}). May be {@literal null} for not member classes.
+   *     Type#getInternalName()}). May be {@literal null} for not member classes.
    * @param innerName the (simple) name of the inner class inside its enclosing class. May be
    *     {@literal null} for anonymous inner classes.
    * @param access the access flags of the inner class as originally declared in the enclosing
@@ -500,7 +500,7 @@ public abstract class Printer {
    * @param access the field's access flags (see {@link Opcodes}). This parameter also indicates if
    *     the field is synthetic and/or deprecated.
    * @param name the field's name.
-   * @param descriptor the field's descriptor (see {@link org.objectweb.asm.Type}).
+   * @param descriptor the field's descriptor (see {@link Type}).
    * @param signature the field's signature. May be {@literal null} if the field's type does not use
    *     generic types.
    * @param value the field's initial value. This parameter, which may be {@literal null} if the
@@ -520,11 +520,11 @@ public abstract class Printer {
    * @param access the method's access flags (see {@link Opcodes}). This parameter also indicates if
    *     the method is synthetic and/or deprecated.
    * @param name the method's name.
-   * @param descriptor the method's descriptor (see {@link org.objectweb.asm.Type}).
+   * @param descriptor the method's descriptor (see {@link Type}).
    * @param signature the method's signature. May be {@literal null} if the method parameters,
    *     return type and exceptions do not use generic types.
    * @param exceptions the internal names of the method's exception classes (see {@link
-   *     org.objectweb.asm.Type#getInternalName()}). May be {@literal null}.
+   *     Type#getInternalName()}). May be {@literal null}.
    * @return the printer.
    */
   public abstract Printer visitMethod(
@@ -628,8 +628,8 @@ public abstract class Printer {
    * @param name the value name.
    * @param value the actual value, whose type must be {@link Byte}, {@link Boolean}, {@link
    *     Character}, {@link Short}, {@link Integer} , {@link Long}, {@link Float}, {@link Double},
-   *     {@link String} or {@link org.objectweb.asm.Type} of {@link org.objectweb.asm.Type#OBJECT}
-   *     or {@link org.objectweb.asm.Type#ARRAY} sort. This value can also be an array of byte,
+   *     {@link String} or {@link Type} of {@link Type#OBJECT}
+   *     or {@link Type#ARRAY} sort. This value can also be an array of byte,
    *     boolean, short, char, int, long, float or double values (this is equivalent to using {@link
    *     #visitArray} and visiting each array element in turn, but is more convenient).
    */
@@ -739,7 +739,7 @@ public abstract class Printer {
    * Field type annotation. See {@link org.objectweb.asm.FieldVisitor#visitTypeAnnotation}.
    *
    * @param typeRef a reference to the annotated type. The sort of this type reference must be
-   *     {@link org.objectweb.asm.TypeReference#FIELD}. See {@link org.objectweb.asm.TypeReference}.
+   *     {@link TypeReference#FIELD}. See {@link TypeReference}.
    * @param typePath the path to the annotated type argument, wildcard bound, array element type, or
    *     static inner type within 'typeRef'. May be {@literal null} if the annotation targets
    *     'typeRef' as a whole.
@@ -797,12 +797,12 @@ public abstract class Printer {
    * Method type annotation. See {@link org.objectweb.asm.MethodVisitor#visitTypeAnnotation}.
    *
    * @param typeRef a reference to the annotated type. The sort of this type reference must be
-   *     {@link org.objectweb.asm.TypeReference#METHOD_TYPE_PARAMETER}, {@link
-   *     org.objectweb.asm.TypeReference#METHOD_TYPE_PARAMETER_BOUND}, {@link
-   *     org.objectweb.asm.TypeReference#METHOD_RETURN}, {@link
-   *     org.objectweb.asm.TypeReference#METHOD_RECEIVER}, {@link
-   *     org.objectweb.asm.TypeReference#METHOD_FORMAL_PARAMETER} or {@link
-   *     org.objectweb.asm.TypeReference#THROWS}. See {@link org.objectweb.asm.TypeReference}.
+   *     {@link TypeReference#METHOD_TYPE_PARAMETER}, {@link
+   *     TypeReference#METHOD_TYPE_PARAMETER_BOUND}, {@link
+   *     TypeReference#METHOD_RETURN}, {@link
+   *     TypeReference#METHOD_RECEIVER}, {@link
+   *     TypeReference#METHOD_FORMAL_PARAMETER} or {@link
+   *     TypeReference#THROWS}. See {@link TypeReference}.
    * @param typePath the path to the annotated type argument, wildcard bound, array element type, or
    *     static inner type within 'typeRef'. May be {@literal null} if the annotation targets
    *     'typeRef' as a whole.
@@ -929,7 +929,7 @@ public abstract class Printer {
    * @param opcode the opcode of the type instruction to be visited. This opcode is either NEW,
    *     ANEWARRAY, CHECKCAST or INSTANCEOF.
    * @param type the operand of the instruction to be visited. This operand must be the internal
-   *     name of an object or array class (see {@link org.objectweb.asm.Type#getInternalName()}).
+   *     name of an object or array class (see {@link Type#getInternalName()}).
    */
   public abstract void visitTypeInsn(int opcode, String type);
 
@@ -939,9 +939,9 @@ public abstract class Printer {
    * @param opcode the opcode of the type instruction to be visited. This opcode is either
    *     GETSTATIC, PUTSTATIC, GETFIELD or PUTFIELD.
    * @param owner the internal name of the field's owner class (see {@link
-   *     org.objectweb.asm.Type#getInternalName()}).
+   *     Type#getInternalName()}).
    * @param name the field's name.
-   * @param descriptor the field's descriptor (see {@link org.objectweb.asm.Type}).
+   * @param descriptor the field's descriptor (see {@link Type}).
    */
   public abstract void visitFieldInsn(int opcode, String owner, String name, String descriptor);
 
@@ -951,9 +951,9 @@ public abstract class Printer {
    * @param opcode the opcode of the type instruction to be visited. This opcode is either
    *     INVOKEVIRTUAL, INVOKESPECIAL, INVOKESTATIC or INVOKEINTERFACE.
    * @param owner the internal name of the method's owner class (see {@link
-   *     org.objectweb.asm.Type#getInternalName()}).
+   *     Type#getInternalName()}).
    * @param name the method's name.
-   * @param descriptor the method's descriptor (see {@link org.objectweb.asm.Type}).
+   * @param descriptor the method's descriptor (see {@link Type}).
    * @deprecated use {@link #visitMethodInsn(int, String, String, String, boolean)} instead.
    */
   @Deprecated
@@ -971,9 +971,9 @@ public abstract class Printer {
    * @param opcode the opcode of the type instruction to be visited. This opcode is either
    *     INVOKEVIRTUAL, INVOKESPECIAL, INVOKESTATIC or INVOKEINTERFACE.
    * @param owner the internal name of the method's owner class (see {@link
-   *     org.objectweb.asm.Type#getInternalName()}).
+   *     Type#getInternalName()}).
    * @param name the method's name.
-   * @param descriptor the method's descriptor (see {@link org.objectweb.asm.Type}).
+   * @param descriptor the method's descriptor (see {@link Type}).
    * @param isInterface if the method's owner class is an interface.
    */
   public void visitMethodInsn(
@@ -989,11 +989,11 @@ public abstract class Printer {
    * Method instruction. See {@link org.objectweb.asm.MethodVisitor#visitInvokeDynamicInsn}.
    *
    * @param name the method's name.
-   * @param descriptor the method's descriptor (see {@link org.objectweb.asm.Type}).
+   * @param descriptor the method's descriptor (see {@link Type}).
    * @param bootstrapMethodHandle the bootstrap method.
    * @param bootstrapMethodArguments the bootstrap method constant arguments. Each argument must be
    *     an {@link Integer}, {@link Float}, {@link Long}, {@link Double}, {@link String}, {@link
-   *     org.objectweb.asm.Type} or {@link Handle} value. This method is allowed to modify the
+   *     Type} or {@link Handle} value. This method is allowed to modify the
    *     content of the array so a caller should expect that this array may change.
    */
   public abstract void visitInvokeDynamicInsn(
@@ -1064,7 +1064,7 @@ public abstract class Printer {
   /**
    * Method instruction. See {@link org.objectweb.asm.MethodVisitor#visitMultiANewArrayInsn}.
    *
-   * @param descriptor an array type descriptor (see {@link org.objectweb.asm.Type}).
+   * @param descriptor an array type descriptor (see {@link Type}).
    * @param numDimensions the number of dimensions of the array to allocate.
    */
   public abstract void visitMultiANewArrayInsn(String descriptor, int numDimensions);
@@ -1073,16 +1073,16 @@ public abstract class Printer {
    * Instruction type annotation. See {@link org.objectweb.asm.MethodVisitor#visitInsnAnnotation}.
    *
    * @param typeRef a reference to the annotated type. The sort of this type reference must be
-   *     {@link org.objectweb.asm.TypeReference#INSTANCEOF}, {@link
-   *     org.objectweb.asm.TypeReference#NEW}, {@link
-   *     org.objectweb.asm.TypeReference#CONSTRUCTOR_REFERENCE}, {@link
-   *     org.objectweb.asm.TypeReference#METHOD_REFERENCE}, {@link
-   *     org.objectweb.asm.TypeReference#CAST}, {@link
-   *     org.objectweb.asm.TypeReference#CONSTRUCTOR_INVOCATION_TYPE_ARGUMENT}, {@link
-   *     org.objectweb.asm.TypeReference#METHOD_INVOCATION_TYPE_ARGUMENT}, {@link
-   *     org.objectweb.asm.TypeReference#CONSTRUCTOR_REFERENCE_TYPE_ARGUMENT}, or {@link
-   *     org.objectweb.asm.TypeReference#METHOD_REFERENCE_TYPE_ARGUMENT}. See {@link
-   *     org.objectweb.asm.TypeReference}.
+   *     {@link TypeReference#INSTANCEOF}, {@link
+   *     TypeReference#NEW}, {@link
+   *     TypeReference#CONSTRUCTOR_REFERENCE}, {@link
+   *     TypeReference#METHOD_REFERENCE}, {@link
+   *     TypeReference#CAST}, {@link
+   *     TypeReference#CONSTRUCTOR_INVOCATION_TYPE_ARGUMENT}, {@link
+   *     TypeReference#METHOD_INVOCATION_TYPE_ARGUMENT}, {@link
+   *     TypeReference#CONSTRUCTOR_REFERENCE_TYPE_ARGUMENT}, or {@link
+   *     TypeReference#METHOD_REFERENCE_TYPE_ARGUMENT}. See {@link
+   *     TypeReference}.
    * @param typePath the path to the annotated type argument, wildcard bound, array element type, or
    *     static inner type within 'typeRef'. May be {@literal null} if the annotation targets
    *     'typeRef' as a whole.
@@ -1111,8 +1111,8 @@ public abstract class Printer {
    * org.objectweb.asm.MethodVisitor#visitTryCatchAnnotation}.
    *
    * @param typeRef a reference to the annotated type. The sort of this type reference must be
-   *     {@link org.objectweb.asm.TypeReference#EXCEPTION_PARAMETER}. See {@link
-   *     org.objectweb.asm.TypeReference}.
+   *     {@link TypeReference#EXCEPTION_PARAMETER}. See {@link
+   *     TypeReference}.
    * @param typePath the path to the annotated type argument, wildcard bound, array element type, or
    *     static inner type within 'typeRef'. May be {@literal null} if the annotation targets
    *     'typeRef' as a whole.
@@ -1145,9 +1145,9 @@ public abstract class Printer {
    * org.objectweb.asm.MethodVisitor#visitTryCatchAnnotation}.
    *
    * @param typeRef a reference to the annotated type. The sort of this type reference must be
-   *     {@link org.objectweb.asm.TypeReference#LOCAL_VARIABLE} or {@link
-   *     org.objectweb.asm.TypeReference#RESOURCE_VARIABLE}. See {@link
-   *     org.objectweb.asm.TypeReference}.
+   *     {@link TypeReference#LOCAL_VARIABLE} or {@link
+   *     TypeReference#RESOURCE_VARIABLE}. See {@link
+   *     TypeReference}.
    * @param typePath the path to the annotated type argument, wildcard bound, array element type, or
    *     static inner type within 'typeRef'. May be {@literal null} if the annotation targets
    *     'typeRef' as a whole.

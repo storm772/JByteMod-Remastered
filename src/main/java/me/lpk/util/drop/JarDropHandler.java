@@ -17,14 +17,14 @@ public class JarDropHandler extends TransferHandler {
     }
 
     @Override
-    public boolean canImport(TransferHandler.TransferSupport info) {
+    public boolean canImport(TransferSupport info) {
         info.setShowDropLocation(false);
         return info.isDrop() && info.isDataFlavorSupported(DataFlavor.javaFileListFlavor);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean importData(TransferHandler.TransferSupport info) {
+    public boolean importData(TransferSupport info) {
         if (!info.isDrop())
             return false;
         Transferable t = info.getTransferable();

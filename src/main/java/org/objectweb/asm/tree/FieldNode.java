@@ -47,7 +47,7 @@ import org.objectweb.asm.TypePath;
 public class FieldNode extends FieldVisitor {
 
   /**
-   * The field's access flags (see {@link org.objectweb.asm.Opcodes}). This
+   * The field's access flags (see {@link Opcodes}). This
    * field also indicates if the field is synthetic and/or deprecated.
    */
   public int access;
@@ -124,7 +124,7 @@ public class FieldNode extends FieldVisitor {
    * {@link #FieldNode(int, int, String, String, String, Object)} version.
    * 
    * @param access
-   *          the field's access flags (see {@link org.objectweb.asm.Opcodes}).
+   *          the field's access flags (see {@link Opcodes}).
    *          This parameter also indicates if the field is synthetic and/or
    *          deprecated.
    * @param name
@@ -156,7 +156,7 @@ public class FieldNode extends FieldVisitor {
    *          the ASM API version implemented by this visitor. Must be one of
    *          {@link Opcodes#ASM4} or {@link Opcodes#ASM5}.
    * @param access
-   *          the field's access flags (see {@link org.objectweb.asm.Opcodes}).
+   *          the field's access flags (see {@link Opcodes}).
    *          This parameter also indicates if the field is synthetic and/or
    *          deprecated.
    * @param name

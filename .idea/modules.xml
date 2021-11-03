@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/JByteMod Reborn.iml" filepath="$PROJECT_DIR$/JByteMod Reborn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/JByteMod-Remastered.iml" filepath="$PROJECT_DIR$/.idea/JByteMod-Remastered.iml" />
     </modules>
   </component>
 </project>

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static me.grax.jbytemod.decompiler.Decompilers.KOFFEE;
 
 public class DecompilerTab extends JPanel {
     private static File tempDir = new File(System.getProperty("java.io.tmpdir"));
@@ -53,54 +54,6 @@ public class DecompilerTab extends JPanel {
         rs.add(decompilerCombo);
 
         compile.setVisible(false);
-    /*compile.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        if(decompiler != KOFFEE) {
-          compile.setVisible(false);
-          return;
-        }
-
-        synchronized (Decompiler.last){
-          ClassNode classNode = new ClassNode();
-
-          try {
-            checkCompiler();
-          } catch (IOException ex) {
-            ex.printStackTrace();
-          }
-          String toCompile = "ToCompile-" + Math.random() * 100 + ".kt";
-
-          try{
-            File file = new File(tempDir.getAbsolutePath() + "/" + toCompile);
-            if(!file.exists()) {
-              file.createNewFile();
-            }else {
-              file.delete();
-              file.createNewFile();
-            }
-
-            FileOutputStream out = new FileOutputStream(file, true);
-            StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append(dp.getText());
-            out.write(stringBuffer.toString().getBytes(StandardCharsets.UTF_8));
-
-            out.close();
-
-            JByteMod.LOGGER.println("Saved temp file to " + file.getAbsolutePath());
-
-            String command = "" + userDir.getAbsolutePath() + "\\kotlinc\\bin\\kotlinc.bat" + " " + file.getAbsolutePath();
-            JByteMod.LOGGER.println("Command: " + command);
-            Runtime.getRuntime().exec(command);
-
-            JByteMod.LOGGER.println("Compiled file with kotlinc.");
-
-          }catch (FileNotFoundException exception) {} catch (IOException ex) {
-            ex.printStackTrace();
-          }
-        }
-      }
-    });*/
         rs.add(compile);
 
         JButton reload = new JButton(JByteMod.res.getResource("reload"));
@@ -157,9 +110,13 @@ public class DecompilerTab extends JPanel {
         }
         Decompiler d = null;
 
+        if (decompiler == KOFFEE) {
+            dp.setEditable(true);
+            compile.setVisible(true);
+        } else {
             compile.setVisible(false);
             dp.setEditable(false);
-        
+        }
 
         switch (decompiler) {
             case PROCYON:
@@ -174,7 +131,9 @@ public class DecompilerTab extends JPanel {
             case KRAKATAU:
                 d = new KrakatauDecompiler(jbm, dp);
                 break;
-
+            case KOFFEE:
+                d = new KoffeeDecompiler(jbm, dp);
+                break;
         }
         d.setNode(cn, mn);
         if (deleteCache) {

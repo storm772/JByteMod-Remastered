@@ -1,14 +1,13 @@
 package me.grax.jbytemod;
 
 import com.sun.tools.attach.VirtualMachine;
-import de.xbrowniecodez.jbytemod.securitymanager.CustomSecurityManager;
-import de.xbrowniecodez.jbytemod.utils.UpdateChecker;
 import me.grax.jbytemod.discord.Discord;
 import me.grax.jbytemod.logging.Logging;
 import me.grax.jbytemod.plugin.Plugin;
 import me.grax.jbytemod.plugin.PluginManager;
 import me.grax.jbytemod.res.LanguageRes;
 import me.grax.jbytemod.res.Options;
+import me.grax.jbytemod.scanner.ScannerThread;
 import me.grax.jbytemod.ui.*;
 import me.grax.jbytemod.ui.graph.ControlFlowPanel;
 import me.grax.jbytemod.ui.lists.LVPList;
@@ -50,9 +49,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class JByteMod extends JFrame {
-	public final static String version = "2.1.4";
-    private static final String jbytemod = "JByteMod Remastered v" + version;
-    
+
+    private static final String jbytemod = "JByteMod Remastered";
     public static File workingDir = new File(".");
     public static String configPath = "jbytemod.cfg";
     public static Logging LOGGER;
@@ -62,6 +60,7 @@ public class JByteMod extends JFrame {
     public static HashMap<ClassNode, MethodNode> lastSelectedTreeEntries = new LinkedHashMap<>();
     public static JByteMod instance;
     public static Color border;
+    public static String version = "66";
     private static boolean lafInit;
     private static JarArchive file;
     private static Instrumentation agentInstrumentation;
@@ -92,11 +91,8 @@ public class JByteMod extends JFrame {
 
     /**
      * Create the frame.
-     * @throws Exception 
      */
-    public JByteMod(boolean agent) throws Exception {
-    	new UpdateChecker();
-    	new CustomSecurityManager();
+    public JByteMod(boolean agent) {
         if (ops.get("use_rt").getBoolean()) {
             new FrameGen().start();
         }
@@ -149,7 +145,7 @@ public class JByteMod extends JFrame {
         }
     }
 
-    public static void agentmain(String agentArgs, Instrumentation ins) throws Exception {
+    public static void agentmain(String agentArgs, Instrumentation ins) {
         if (!ins.isRedefineClassesSupported()) {
             JOptionPane.showMessageDialog(null, "Class redefinition is disabled, cannot attach!");
             return;
@@ -489,5 +485,4 @@ public class JByteMod extends JFrame {
             }
         }).start();
     }
-
 }

@@ -50,7 +50,7 @@ import org.objectweb.asm.tree.TableSwitchInsnNode;
 import org.objectweb.asm.tree.TryCatchBlockNode;
 
 /**
- * A {@link org.objectweb.asm.MethodVisitor} that removes JSR instructions and inlines the
+ * A {@link MethodVisitor} that removes JSR instructions and inlines the
  * referenced subroutines.
  *
  * @author Niko Matsakis
@@ -549,7 +549,7 @@ public class JSRInlinerAdapter extends MethodNode implements Opcodes {
     // AbstractMap implementation
 
     @Override
-    public Set<Map.Entry<LabelNode, LabelNode>> entrySet() {
+    public Set<Entry<LabelNode, LabelNode>> entrySet() {
       throw new UnsupportedOperationException();
     }
 

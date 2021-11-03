@@ -81,9 +81,9 @@ public class ClassRemapper extends ClassVisitor {
    * Constructs a new {@link ClassRemapper}.
    *
    * @param api the ASM API version supported by this remapper. Must be one of {@link
-   *     org.objectweb.asm.Opcodes#ASM4}, {@link org.objectweb.asm.Opcodes#ASM5}, {@link
-   *     org.objectweb.asm.Opcodes#ASM6}, {@link org.objectweb.asm.Opcodes#ASM7}, {@link
-   *     org.objectweb.asm.Opcodes#ASM8} or {@link org.objectweb.asm.Opcodes#ASM9}.
+   *     Opcodes#ASM4}, {@link Opcodes#ASM5}, {@link
+   *     Opcodes#ASM6}, {@link Opcodes#ASM7}, {@link
+   *     Opcodes#ASM8} or {@link Opcodes#ASM9}.
    * @param classVisitor the class visitor this remapper must deleted to.
    * @param remapper the remapper to use to remap the types in the visited class.
    */

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class OpUtils implements org.objectweb.asm.Opcodes {
+public class OpUtils implements Opcodes {
     public static HashMap<AbstractInsnNode, Integer> labelCache = new HashMap<>();
     private static Map<Integer, String> opcodes = new HashMap<Integer, String>(getCodes());
     private static Map<String, Integer> reopcodes = new HashMap<String, Integer>(getReCodes());

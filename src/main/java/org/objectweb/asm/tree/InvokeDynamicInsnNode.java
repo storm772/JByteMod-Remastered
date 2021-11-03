@@ -78,7 +78,7 @@ public class InvokeDynamicInsnNode extends AbstractInsnNode {
    * @param name
    *          invokedynamic name.
    * @param desc
-   *          invokedynamic descriptor (see {@link org.objectweb.asm.Type}).
+   *          invokedynamic descriptor (see {@link Type}).
    * @param bsm
    *          the bootstrap method.
    * @param bsmArgs

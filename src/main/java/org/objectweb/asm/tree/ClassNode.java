@@ -55,7 +55,7 @@ public class ClassNode extends ClassVisitor {
     public int version;
 
     /**
-     * The class's access flags (see {@link org.objectweb.asm.Opcodes}). This field
+     * The class's access flags (see {@link Opcodes}). This field
      * also indicates if the class is deprecated.
      */
     public int access;
